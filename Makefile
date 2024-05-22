@@ -1,3 +1,5 @@
+.PHONY:	build
+
 generate:
 	@go generate ./parser/document.go
 

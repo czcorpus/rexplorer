@@ -1,6 +1,19 @@
 //go:generate pigeon -o ./parser.go ./grammar.peg
 package parser
 
+import (
+	"fmt"
+	"strings"
+)
+
+func mknumtabs(n int) string {
+	var ans strings.Builder
+	for i := 0; i < n; i++ {
+		ans.WriteString("\t")
+	}
+	return ans.String()
+}
+
 func fromIdxOfUntypedSlice(arr any, idx int) any {
 	if arr == nil {
 		return nil
@@ -9,24 +22,52 @@ func fromIdxOfUntypedSlice(arr any, idx int) any {
 	return v[idx]
 }
 
+type property string
+
+func (p property) String() string {
+	return p.IndentedString(0)
+}
+
+func (p property) IndentedString(ntab int) string {
+	return mknumtabs(ntab) + string(p) + "\n"
+}
+
 type KeyVals []*KeyVal
 
-func (kv KeyVals) Get(name string) string {
+func (kv KeyVals) Get(name string) property {
 	for _, v := range kv {
 		if v.Name == name {
-			return v.Value
+			return property(v.Value)
 		}
 	}
-	return ""
+	return property("")
 }
 
 type Document struct {
-	Entries    KeyVals
-	PosAttrs   []*Attr
-	Structures []*Structure
+	Entries    KeyVals      `json:"entries"`
+	PosAttrs   []*Attr      `json:"posAttrs"`
+	Structures []*Structure `json:"stuctures"`
 }
 
-func (doc *Document) GetProperty(name string) string {
+func (doc *Document) String() string {
+	var ans strings.Builder
+
+	for _, v := range doc.Entries {
+		ans.WriteString(v.IndentedString(0))
+	}
+	ans.WriteString("\n")
+	for _, v := range doc.PosAttrs {
+		ans.WriteString(v.IndentedString(0))
+	}
+	ans.WriteString("\n")
+	for _, v := range doc.Structures {
+		ans.WriteString(v.IndentedString(0))
+	}
+	ans.WriteString("\n")
+	return ans.String()
+}
+
+func (doc *Document) GetProperty(name string) property {
 	return doc.Entries.Get(name)
 }
 
@@ -49,23 +90,70 @@ func (doc *Document) GetStructure(name string) *Structure {
 }
 
 type KeyVal struct {
-	Name  string
-	Value string
+	Name  string `json:"name"`
+	Value string `json:"value"`
+}
+
+func (kv KeyVal) String() string {
+	return kv.IndentedString(0)
+}
+
+func (kv KeyVal) IndentedString(ntab int) string {
+	return fmt.Sprintf("%s%s\t%s\n", mknumtabs(ntab), kv.Name, kv.Value)
 }
 
 type Attr struct {
-	Name    string
-	Entries KeyVals
+	Name    string  `json:"name"`
+	Entries KeyVals `json:"entries"`
 }
 
-func (attr *Attr) GetProperty(name string) string {
+func (attr *Attr) String() string {
+	return attr.IndentedString(0)
+}
+
+func (attr *Attr) IndentedString(ntab int) string {
+	if len(attr.Entries) == 0 {
+		return fmt.Sprintf("%s%s\n", mknumtabs(ntab), attr.Name)
+	}
+	var ans strings.Builder
+	ans.WriteString(fmt.Sprintf("%s%s {\n", mknumtabs(ntab), attr.Name))
+	for _, v := range attr.Entries {
+		ans.WriteString(mknumtabs(ntab) + v.IndentedString(ntab+1))
+	}
+	ans.WriteString(mknumtabs(ntab) + "}\n")
+	return ans.String()
+}
+
+func (attr *Attr) GetProperty(name string) property {
 	return attr.Entries.Get(name)
 }
 
 type Structure struct {
-	Name    string
-	Attrs   []*Attr
-	Entries KeyVals
+	Name    string  `json:"name"`
+	Attrs   []*Attr `json:"attr"`
+	Entries KeyVals `json:"entries"`
+}
+
+func (st *Structure) String() string {
+	return st.IndentedString(0)
+}
+
+func (st *Structure) IndentedString(ntab int) string {
+	var ans strings.Builder
+	ans.WriteString(fmt.Sprintf("%s%s {\n", mknumtabs(ntab), st.Name))
+	for _, v := range st.Entries {
+		ans.WriteString(mknumtabs(ntab) + v.IndentedString(ntab+1))
+	}
+	if len(st.Attrs) > 0 {
+		for _, v := range st.Attrs {
+			ans.WriteString(mknumtabs(ntab) + v.IndentedString(ntab+1))
+		}
+
+	} else {
+		ans.WriteString(mknumtabs(ntab) + "\n")
+	}
+	ans.WriteString(mknumtabs(ntab) + "}\n")
+	return ans.String()
 }
 
 func (st *Structure) GetAttribute(name string) *Attr {
@@ -75,6 +163,10 @@ func (st *Structure) GetAttribute(name string) *Attr {
 		}
 	}
 	return nil
+}
+
+func (st *Structure) GetProperty(name string) property {
+	return st.Entries.Get(name)
 }
 
 func NewDocument() *Document {
