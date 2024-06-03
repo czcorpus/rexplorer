@@ -24,10 +24,20 @@ func fromIdxOfUntypedSlice(arr any, idx int) any {
 
 type property string
 
+// Value returns a representation
+// without additional characters which
+// is useful for further processing.
+func (p property) Value() string {
+	return string(p)
+}
+
 func (p property) String() string {
 	return p.IndentedString(0)
 }
 
+// IndentedString produces the value as a registry
+// file entry with some indentation and a newline
+// character at the end of the line.
 func (p property) IndentedString(ntab int) string {
 	return mknumtabs(ntab) + string(p) + "\n"
 }
