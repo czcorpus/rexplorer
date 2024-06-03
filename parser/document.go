@@ -42,6 +42,10 @@ func (p property) IndentedString(ntab int) string {
 	return mknumtabs(ntab) + string(p) + "\n"
 }
 
+func (p property) IsEmpty() bool {
+	return p == ""
+}
+
 type KeyVals []*KeyVal
 
 func (kv KeyVals) Get(name string) property {
@@ -79,6 +83,21 @@ func (doc *Document) String() string {
 
 func (doc *Document) GetProperty(name string) property {
 	return doc.Entries.Get(name)
+}
+
+// GetStaticPosattrs returns positional attributes
+// which are not DYNAMIC. I.e. the attributes returned
+// by this method (including their order) should be
+// exactly matching data in a corresponding vertical file.
+func (doc *Document) GetStaticPosattrs() []*Attr {
+	ans := make([]*Attr, 0, len(doc.PosAttrs))
+	for _, v := range doc.PosAttrs {
+		dn := v.Entries.Get("DYNAMIC")
+		if dn.IsEmpty() {
+			ans = append(ans, v)
+		}
+	}
+	return ans
 }
 
 func (doc *Document) GetPosAttr(name string) *Attr {
