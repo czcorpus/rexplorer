@@ -142,10 +142,10 @@ func (attr *Attr) String() string {
 
 func (attr *Attr) IndentedString(ntab int) string {
 	if len(attr.Entries) == 0 {
-		return fmt.Sprintf("%s%s\n", mknumtabs(ntab), attr.Name)
+		return fmt.Sprintf("%sATTRIBUTE %s\n", mknumtabs(ntab), attr.Name)
 	}
 	var ans strings.Builder
-	ans.WriteString(fmt.Sprintf("%s%s {\n", mknumtabs(ntab), attr.Name))
+	ans.WriteString(fmt.Sprintf("%sATTRIBUTE %s {\n", mknumtabs(ntab), attr.Name))
 	for _, v := range attr.Entries {
 		ans.WriteString(mknumtabs(ntab) + v.IndentedString(ntab+1))
 	}
@@ -169,7 +169,7 @@ func (st *Structure) String() string {
 
 func (st *Structure) IndentedString(ntab int) string {
 	var ans strings.Builder
-	ans.WriteString(fmt.Sprintf("%s%s {\n", mknumtabs(ntab), st.Name))
+	ans.WriteString(fmt.Sprintf("%sSTRUCTURE %s {\n", mknumtabs(ntab), st.Name))
 	for _, v := range st.Entries {
 		ans.WriteString(mknumtabs(ntab) + v.IndentedString(ntab+1))
 	}
