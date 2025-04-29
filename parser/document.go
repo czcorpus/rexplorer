@@ -82,7 +82,17 @@ func (doc *Document) String() string {
 }
 
 func (doc *Document) GetProperty(name string) property {
-	return doc.Entries.Get(name)
+	switch name {
+	case "STRUCTLIST":
+		ans := make([]string, len(doc.Structures))
+		for i, s := range doc.Structures {
+			ans[i] = s.Name
+		}
+		return property(strings.Join(ans, ","))
+	default:
+		return doc.Entries.Get(name)
+	}
+
 }
 
 // GetStaticPosattrs returns positional attributes
