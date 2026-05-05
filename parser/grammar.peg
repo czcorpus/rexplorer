@@ -26,7 +26,7 @@
 }
 
 Config <-
-    items:(ConfigItem NewLine)+ item:ConfigItem? EOF {
+    items:(CommentedConfigItem NewLine)+ item:CommentedConfigItem? EOF {
         document := NewDocument()
         itemsT, ok := items.([]any)
         if !ok {
@@ -54,6 +54,10 @@ Config <-
         }
         return document, nil
     }
+
+CommentedConfigItem <-
+    ConfigItem Ws+ Comment /
+    ConfigItem
 
 ConfigItem <-
     Ws* attr:Attribute {

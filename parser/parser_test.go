@@ -13,7 +13,7 @@ LANGUAGE "Czech"
 LOCALE   "cs_CZ.UTF-8"
 ENCODING "utf-8"
 INFO     "Synchronní reprezentativní korpus"
-VERTICAL "/home/tomas/work/data/corpora/vertikaly/syn2020/syn2020_chunk3m"
+VERTICAL "/home/tomas/work/data/corpora/vertikaly/syn2020/syn2020_chunk3m"  # this is a comment
 
 ATTRIBUTE lc {
 	LABEL "lc [lowercase word]"
