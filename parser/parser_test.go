@@ -26,6 +26,8 @@ ATTRIBUTE lc {
 	TRANSQUERY yes
 }
 
+ATTRIBUTE wordcount         # some comment
+
 ATTRIBUTE sforma {
 	TYPE "FD_FGD"
 	MULTIVALUE y
@@ -58,6 +60,17 @@ STRUCTURE text {
 )
 
 func TestRegExample(t *testing.T) {
-	_, err := ParseRegistry("test1", reg)
+	doc, err := ParseRegistry("test1", reg)
 	assert.NoError(t, err)
+
+	sText := doc.GetStructure("text")
+	assert.NotNil(t, sText)
+
+	lcAttr := doc.GetPosAttr("lc")
+	assert.NotNil(t, lcAttr)
+
+	assert.Equal(t, "/var/opt/kontext/indexed/syn2020", string(doc.Entries.Get("PATH")))
+
+	assert.Equal(t, "Synchronní reprezentativní korpus", string(doc.Entries.Get("INFO")))
+
 }

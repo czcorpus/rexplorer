@@ -26,7 +26,7 @@
 }
 
 Config <-
-    items:(CommentedConfigItem NewLine)+ item:CommentedConfigItem? EOF {
+    items:(CommentedConfigLine NewLine)+ item:CommentedConfigLine? EOF {
         document := NewDocument()
         itemsT, ok := items.([]any)
         if !ok {
@@ -55,25 +55,38 @@ Config <-
         return document, nil
     }
 
-CommentedConfigItem <-
-    ConfigItem Ws+ Comment /
-    ConfigItem
-
-ConfigItem <-
-    Ws* attr:Attribute {
-        return attr, nil
+CommentedConfigLine <-
+    c0:ConfigItem Ws+ Comment {
+        switch vt := c0.(type) {
+        case *Attr, *Structure, *KeyVal:
+            return vt, nil
+        default:
+            return nil, nil
+        }
     } /
-    Ws* strct:Structure {
-        return strct, nil
+    c1:ConfigItem Ws* {
+        switch vt := c1.(type) {
+        case *Attr, *Structure, *KeyVal:
+            return vt, nil
+        default:
+            return nil, nil
+        }
     } /
-    Ws* kv:KeyVal {
-        return kv, nil
-    } /
-    Comment /
     Ws*
 
+ConfigItem <-
+    attr:Attribute {
+        return attr, nil
+    } /
+    strct:Structure {
+        return strct, nil
+    } /
+    kv:KeyVal {
+        return kv, nil
+    }
+
 Comment <-
-    Ws* "#" [^\n]*
+    "#" [^\n]*
 
 KeyVal <-
     idnt:UCIdentifier Ws+ value:SimpleAttrVal {
@@ -109,7 +122,7 @@ KeyVal <-
     }
 
 Attribute <-
-    "ATTRIBUTE" Ws+ ident:LCIdentifier Ws+ "{" Ws* NewLine kv:(AttributeLineEntry NewLine)+ Ws* "}" Ws* {
+    "ATTRIBUTE" Ws+ ident:LCIdentifier Ws+ "{" Ws* NewLine kv:(AttributeLineEntry NewLine)+ Ws* "}" {
         tIdent, ok := ident.(string)
         if !ok {
             return nil, fmt.Errorf("invalid type in Attribute - expected string for ident")
@@ -128,13 +141,14 @@ Attribute <-
         }
         return ans, nil
     } /
-    "ATTRIBUTE" Ws+ ident:LCIdentifier Ws*  ("{" NewLine? Ws* NewLine? "}")? Ws* {
+    "ATTRIBUTE" Ws+ ident:LCIdentifier (Ws* "{" NewLine? Ws* NewLine? "}")? {
         tIdent, ok := ident.(string)
         if !ok {
             return nil, fmt.Errorf("invalid type in Attribute - expected string for ident")
         }
         return &Attr{Name: tIdent}, nil
     }
+
 
 AttributeLineEntry <-
     Ws* v:KeyVal Ws* {
@@ -149,7 +163,7 @@ AttributeLineEntry <-
 
 
 Structure <-
-    "STRUCTURE" Ws+ ident:LCIdentifier Ws+ "{" Ws* NewLine entries:(StructLineEntry NewLine)+ "}" Ws* {
+    "STRUCTURE" Ws+ ident:LCIdentifier Ws+ "{" Ws* NewLine entries:(Ws* StructLineEntry Ws* NewLine)+ "}" {
         tIdent, ok := ident.(string)
         if !ok {
             return nil, fmt.Errorf("invalid type in Structure - expected string")
@@ -161,7 +175,7 @@ Structure <-
             return nil, fmt.Errorf("invalid type in Structure - expected []any")
         }
         for _, vx := range entriesSlice {
-            vxx := fromIdxOfUntypedSlice(vx, 0)
+            vxx := fromIdxOfUntypedSlice(vx, 1)
             switch vtt := vxx.(type) {
             case *Attr:
                 ans.Attrs = append(ans.Attrs, vtt)
@@ -171,7 +185,7 @@ Structure <-
         }
         return ans, nil
     } /
-    "STRUCTURE" Ws+ ident:LCIdentifier Ws* ("{" NewLine? Ws* NewLine? "}")? Ws* {
+    "STRUCTURE" Ws+ ident:LCIdentifier Ws* ("{" NewLine? Ws* NewLine? "}")? {
         tIdent, ok := ident.(string)
         if !ok {
             return nil, fmt.Errorf("invalid type in Structure - expected string")
@@ -180,14 +194,13 @@ Structure <-
     }
 
 StructLineEntry <-
-    Ws* entry:Attribute Ws* {
+    entry:Attribute {
         return entry, nil
     } /
-    Ws* entry:KeyVal Ws* {
+    entry:KeyVal {
         return entry, nil
     } /
-    Comment /
-    Ws*
+    Comment
 
 Ws <- [\t] / " " {
     return string(c.text), nil
