@@ -30,7 +30,7 @@ ATTRIBUTE lc {
 
 ATTRIBUTE wordcount         # some comment
 
-ATTRIBUTE sforma {
+ATTRIBUTE sforma {  # comment on the first block line
 	TYPE "FD_FGD"
 	MULTIVALUE y
 	MULTISEP "|"
@@ -46,7 +46,7 @@ ATTRIBUTE p_pos {
 	TYPE index
 }
 
-STRUCTURE text {
+STRUCTURE text {   # comment on the first block line
 	TYPE "file64"
 	ATTRIBUTE author {
 			LOCALE "sk_SK"

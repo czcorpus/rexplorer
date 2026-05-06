@@ -123,7 +123,7 @@ KeyVal <-
     }
 
 Attribute <-
-    "ATTRIBUTE" Ws+ ident:LCIdentifier Ws+ "{" Ws* kv:(NewLine !(Ws* "}") AttributeLineEntry)* NewLine Ws* "}" {
+    "ATTRIBUTE" Ws+ ident:LCIdentifier Ws+ "{" (Ws+ Comment)? Ws* kv:(NewLine !(Ws* "}") AttributeLineEntry)* NewLine Ws* "}" {
         tIdent, ok := ident.(string)
         if !ok {
             return nil, fmt.Errorf("invalid type in Attribute - expected string for ident")
@@ -164,7 +164,7 @@ AttributeLineEntry <-
 
 
 Structure <-
-    "STRUCTURE" Ws+ ident:LCIdentifier Ws+ "{" Ws* entries:(NewLine !(Ws* "}") Ws* StructLineEntry)+ NewLine Ws* "}" {
+    "STRUCTURE" Ws+ ident:LCIdentifier Ws+ "{" (Ws+ Comment)? Ws* entries:(NewLine !(Ws* "}") Ws* StructLineEntry)+ NewLine Ws* "}" {
         tIdent, ok := ident.(string)
         if !ok {
             return nil, fmt.Errorf("invalid type in Structure - expected string")
