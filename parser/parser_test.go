@@ -18,13 +18,15 @@ VERTICAL "/home/tomas/work/data/corpora/vertikaly/syn2020/syn2020_chunk3m"  # th
 ATTRIBUTE lc {
 	LABEL "lc [lowercase word]"
 	DYNAMIC utf8lowercase
-	DYNLIB internal
+	DYNLIB internal  # and another comment
 	ARG1 "C"
 	FUNTYPE s
 	FROMATTR word
 	TYPE index
 	TRANSQUERY yes
-}
+} # and comment in the end of attr
+
+# and top level comment
 
 ATTRIBUTE wordcount         # some comment
 
