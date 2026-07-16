@@ -1,0 +1,374 @@
+NAME "InterCorp v13ud - Czech"
+LANGUAGE	"Czech"
+DEFAULTLOCALE	"cs_CZ"
+#PATH /cnk/work/vavrin/corpora/data/intercorp_v13ud/intercorp_v13ud_cs
+PATH /var/opt/manatee/data/intercorp_v13ud/intercorp_v13ud_cs
+
+WSBASE none
+ENCODING utf8
+INFO "Korpus InterCorp - čeština, verze 13ud z 12. 12. 2021"
+
+SHORTREF "=doc.id"
+
+SUBCORPATTRS "text.group|text.txtype|text.srclang|text.original|text.translator,text.author|text.title"
+TAGSETDOC "http://universaldependencies.org/docs/u/pos/index.html"
+WPOSLIST ",podstatné jméno,N.*,přídavné jméno,A.*,zájmeno,P.*,číslovka,C.*,sloveso,V.*,příslovce,D.*,předložka,R.*,spojka,J.*,částice,T.*,citoslovce,I.*,interpunkce,Z.*,neznámý,X.*"
+
+ALIGNSTRUCT s
+
+ALIGNED	"intercorp_v13ud_ar,intercorp_v13ud_be,intercorp_v13ud_bg,intercorp_v13ud_ca,intercorp_v13ud_da,intercorp_v13ud_de,intercorp_v13ud_el,intercorp_v13ud_en,intercorp_v13ud_es,intercorp_v13ud_et,intercorp_v13ud_fi,intercorp_v13ud_fr,intercorp_v13ud_he,intercorp_v13ud_hi,intercorp_v13ud_hr,intercorp_v13ud_hu,intercorp_v13ud_is,intercorp_v13ud_it,intercorp_v13ud_ja,intercorp_v13ud_lt,intercorp_v13ud_lv,intercorp_v13ud_mk,intercorp_v13ud_ms,intercorp_v13ud_mt,intercorp_v13ud_nl,intercorp_v13ud_no,intercorp_v13ud_pl,intercorp_v13ud_pt,intercorp_v13ud_rn,intercorp_v13ud_ro,intercorp_v13ud_ru,intercorp_v13ud_sk,intercorp_v13ud_sl,intercorp_v13ud_sq,intercorp_v13ud_sr,intercorp_v13ud_sv,intercorp_v13ud_tr,intercorp_v13ud_uk,intercorp_v13ud_vi,intercorp_v13ud_zh"
+
+ALIGNDEF "/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2ar,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2be,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2bg,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2ca,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2da,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2de,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2el,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2en,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2es,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2et,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2fi,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2fr,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2he,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2hi,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2hr,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2hu,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2is,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2it,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2ja,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2lt,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2lv,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2mk,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2ms,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2mt,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2nl,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2no,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2pl,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2pt,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2rn,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2ro,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2ru,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2sk,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2sl,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2sq,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2sr,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2sv,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2sy,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2tr,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2uk,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2vi,/var/opt/manatee/aligndef/intercorp_v13ud/intercorp.cs2zh"
+
+#1 word form
+  ATTRIBUTE word {
+ 	LOCALE "cs_CZ.UTF-8"
+ 	TYPE "MD_MGD"
+ }
+
+#2 <word> split into interpreted (restored) syntactic words
+  ATTRIBUTE sword {
+ 	LOCALE "cs_CZ.UTF-8"
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#3 <word> split into syntactic words without altering the original form
+  ATTRIBUTE iword {
+ 	LOCALE "cs_CZ.UTF-8"
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#5 lemma
+  ATTRIBUTE lemma {
+ 	LOCALE "cs_CZ.UTF-8"
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#7 UD POS tag
+  ATTRIBUTE upos {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#8 language-specific tag
+  ATTRIBUTE xpos {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#9 UD morphological categories
+  ATTRIBUTE feats {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#10 word index within sentence
+  ATTRIBUTE id {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#11 <id> of the token's head
+  ATTRIBUTE head {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#12 UD syntactic function
+  ATTRIBUTE deprel {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#13 relative position of <head>
+  ATTRIBUTE parent {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#14 lemma of <head>
+  ATTRIBUTE p_lemma {
+ 	LOCALE "cs_CZ.UTF-8"
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#15 <upos> of <head>
+  ATTRIBUTE p_upos {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#16 <feats> of <head>
+  ATTRIBUTE p_feats {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#17 <deprel> of <head>
+  ATTRIBUTE p_deprel {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#18 <id> of effective head
+  ATTRIBUTE e_id {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#19 relative position of effective head
+  ATTRIBUTE eparent {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#22 <feats> of the token's auxiliary verb
+  ATTRIBUTE aux_feats {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#23 type of the token's auxiliary verb
+  ATTRIBUTE aux_type {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#24 <lemma> of the token's adposition
+  ATTRIBUTE case_lemma {
+ 	LOCALE "cs_CZ.UTF-8"
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#26 <feats> of the token's adposition
+  ATTRIBUTE case_feats {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#34 <feats> of the token's copula
+  ATTRIBUTE cop_feats {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#40 <lemma> of the token's marker
+  ATTRIBUTE mark_lemma {
+ 	LOCALE "cs_CZ.UTF-8"
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#44 abbreviation
+  ATTRIBUTE abbr {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#45
+  ATTRIBUTE aspect {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#46
+  ATTRIBUTE case {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#48
+  ATTRIBUTE degree {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#49
+  ATTRIBUTE foreign {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#50
+  ATTRIBUTE gender {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#51
+  ATTRIBUTE mood {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#52
+  ATTRIBUTE number {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#53
+  ATTRIBUTE num_type {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#54
+  ATTRIBUTE person {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#55
+  ATTRIBUTE polarity {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#56
+  ATTRIBUTE poss {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#57
+  ATTRIBUTE pron_type {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#58
+  ATTRIBUTE reflex {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#59
+  ATTRIBUTE tense {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#60
+  ATTRIBUTE verb_form {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+#61
+  ATTRIBUTE voice {
+ 	TYPE "MD_MGD"
+ 	MULTIVALUE y
+ 	MULTISEP "|"
+ }
+
+
+
+
+
+
+STRUCTURE doc {
+	ATTRIBUTE id
+	ATTRIBUTE tag_model
+}
+
+STRUCTURE text {
+	ATTRIBUTE id
+	ATTRIBUTE author
+	ATTRIBUTE title
+	ATTRIBUTE lang
+	ATTRIBUTE version
+	ATTRIBUTE group
+	ATTRIBUTE publisher
+	ATTRIBUTE pubplace
+	ATTRIBUTE pubDateYear
+	ATTRIBUTE pubDateMonth
+	ATTRIBUTE origyear
+	ATTRIBUTE isbn
+	ATTRIBUTE txtype
+	ATTRIBUTE comment
+	ATTRIBUTE original
+	ATTRIBUTE srclang
+	ATTRIBUTE translator
+	ATTRIBUTE transsex
+	ATTRIBUTE authsex
+	ATTRIBUTE transcomment
+	ATTRIBUTE collectionauthor
+	ATTRIBUTE collectiontitle
+	ATTRIBUTE volume
+	ATTRIBUTE pages
+	ATTRIBUTE lang_var
+	ATTRIBUTE wordcount
+}
+
+STRUCTURE p {
+	ATTRIBUTE id
+}
+
+STRUCTURE s {
+        TYPE "file64"
+        ATTRIBUTE id {
+                TYPE "UNIQUE"
+        }
+}
+
+STRUCTURE hi {
+	ATTRIBUTE rend
+}
+
+STRUCTURE lb {
+	ATTRIBUTE id
+}
+
+STRUCTURE div {
+	ATTRIBUTE id
+	ATTRIBUTE type
+}
+
+STRUCTURE g
+
+MAXCONTEXT 50
+MAXDETAIL 50

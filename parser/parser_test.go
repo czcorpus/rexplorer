@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -75,4 +76,12 @@ func TestRegExample(t *testing.T) {
 
 	assert.Equal(t, "Synchronní reprezentativní korpus", string(doc.Entries.Get("INFO")))
 
+}
+
+func TestParseIntercorpV13udCs(t *testing.T) {
+	data, err := os.ReadFile("testdata/intercorp_v13ud_cs")
+	assert.NoError(t, err)
+
+	_, err = ParseRegistryBytes("intercorp_v13ud_cs", data)
+	assert.NoError(t, err)
 }
