@@ -56,7 +56,7 @@ Config <-
     }
 
 CommentedConfigItem <-
-    c0:ConfigItem Ws+ Comment {
+    Ws* c0:ConfigItem Ws+ Comment {
         switch vt := c0.(type) {
         case *Attr, *Structure, *KeyVal:
             return vt, nil
@@ -64,7 +64,7 @@ CommentedConfigItem <-
             return nil, nil
         }
     } /
-    c1:ConfigItem Ws* {
+    Ws* c1:ConfigItem Ws* {
         switch vt := c1.(type) {
         case *Attr, *Structure, *KeyVal:
             return vt, nil
