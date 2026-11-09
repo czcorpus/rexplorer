@@ -60,6 +60,49 @@ STRUCTURE text {   # comment on the first block line
 	}
 }
 `
+
+	reg2 = `MAINTAINER "CLARIN.SI <info@clarin.si>"
+NAME "CLASSLAWiki-sl (Slovenian Wikipedia)"
+INFO "Slovenian Wikipedia corpus CLASSLAWiki-sl 1.0"
+INFOHREF "http://hdl.handle.net/11356/1427"
+ENCODING "UTF-8"
+LOCALE "sl_SI.UTF-8"
+DEFAULTLOCALE "sl_SI.UTF-8"
+LANGUAGE "Slovenian"
+TAGSETDOC "https://universaldependencies.org/guidelines.html"
+
+PATH "/path/to/classlawiki_sl/"
+VERTICAL "| zcat /path/to/vert/classlawiki-sl.vert.gz"
+
+DOCSTRUCTURE text
+MAXDETAIL 10000
+
+SUBCORPATTRS "text.id|text.title|text.url"
+SHORTREF "=text.title"
+FULLREF "text.id,text.title,text.url,p.id,s.id"
+
+STRUCTURE text {
+    ATTRIBUTE id {
+      LABEL "Text ID"
+      TYPE "UNIQUE"
+      TYPE "FD_FGD"
+    }
+    ATTRIBUTE title
+    ATTRIBUTE url
+}
+STRUCTURE p {
+    ATTRIBUTE id {
+      TYPE "UNIQUE"
+      TYPE "FD_FGD"
+    }
+    DISPLAYTAG 0
+    DISPLAYBEGIN ""
+    DISPLAYEND " ¶ "
+}
+ATTRIBUTE tag {
+        LABEL   "MULTEXT-East MSD"
+        TYPE "FD_FGD"
+}`
 )
 
 func TestRegExample(t *testing.T) {
@@ -76,6 +119,21 @@ func TestRegExample(t *testing.T) {
 
 	assert.Equal(t, "Synchronní reprezentativní korpus", string(doc.Entries.Get("INFO")))
 
+}
+
+func TestRegExampleClarinSL(t *testing.T) {
+	doc, err := ParseRegistry("test1", reg2)
+	assert.NoError(t, err)
+
+	sText := doc.GetStructure("text")
+	assert.NotNil(t, sText)
+
+	lcAttr := doc.GetPosAttr("tag")
+	assert.NotNil(t, lcAttr)
+
+	assert.Equal(t, "/path/to/classlawiki_sl/", string(doc.Entries.Get("PATH")))
+
+	assert.Equal(t, "Slovenian Wikipedia corpus CLASSLAWiki-sl 1.0", string(doc.Entries.Get("INFO")))
 }
 
 func TestParseIntercorpV13udCs(t *testing.T) {
