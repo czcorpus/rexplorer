@@ -119,6 +119,8 @@ func (doc *Document) GetPosAttr(name string) *Attr {
 	return nil
 }
 
+// GetStructure returns a structure given its name. In case
+// no such structure exists, return nil`
 func (doc *Document) GetStructure(name string) *Structure {
 	for _, s := range doc.Structures {
 		if s.Name == name {
